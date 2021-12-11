@@ -1,3 +1,5 @@
+const treeUtils = require('./tree-utils');
+
 const cmd = "MOVE";
 
 async function execute(dir, pos, tree, options) {

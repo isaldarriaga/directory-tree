@@ -1,10 +1,10 @@
-const utils = require('./utils');
+const treeUtils = require('./tree-utils');
 
 const cmd = "DELETE";
 
 async function execute(dir, tree, options) {
 
- const info = await utils.getDirInfo(dir, tree);
+ const info = await treeUtils.info.getDirInfo(dir, tree);
  var output = '';
 
  if (info.parent.exists) {

@@ -1,7 +1,11 @@
+const treeUtils = require('./tree-utils');
+
 const cmd = "LIST";
 
 async function execute(tree, options) {
-  return cmd + "\n";
+  const cmdOutput = cmd + "\n";
+  const treeOutput = treeUtils.format.getTreeAsString(tree);
+  return cmdOutput + treeOutput;
 }
 
 module.exports = {

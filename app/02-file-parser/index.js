@@ -14,7 +14,7 @@ async function getCommands(inputFile, options) {
         tokens: tokens
       });
 
-      // checks num of arguments
+      // check num of arguments/invalid command
       var invalidNumArgs = false;
       switch (tokens[0]) {
         case "CREATE":
