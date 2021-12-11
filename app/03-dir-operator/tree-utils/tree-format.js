@@ -8,16 +8,17 @@ function _isEmptyObject(obj) {
 function getTreeAsString(tree, level) {
 
  level = level ? level : 0;
- var output = new Array(2 * level + 1).join(' ');
+ const spaces = new Array(2 * level + 1).join(' ');
+ var output = '';
 
- // sort children
- const children = Object.keys(tree).sort((a, b) => a.localeCompare(b));
+ // sort names alphabetically
+ const siblings = Object.keys(tree).sort((a, b) => a.localeCompare(b));
 
- for (const dir of children) {
+ for (const dir of siblings) {
   if (_isEmptyObject(tree[dir])) {
-   output += dir + '\n';
+   output += spaces + dir + '\n';
   } else {
-   output += dir + '\n' + getTreeAsString(tree[dir], ++level);
+   output += spaces + dir + '\n' + getTreeAsString(tree[dir], level + 1);
   }
  }
  return output;

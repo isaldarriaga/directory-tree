@@ -1,16 +1,18 @@
-const { treeInfo } = require('./tree-utils');
+const { treeInfo, treeDelete } = require('./tree-utils');
 
 const cmd = "DELETE";
 
 async function execute(dir, tree, options) {
 
- const info = await treeInfo.getDirInfo(dir, tree);
+ var info = await treeInfo.getDirInfo(dir, tree);
  var output = '';
 
  if (info.parent.exists) {
-  output = cmd + ' ' + dir;
+  info = await treeDelete.delDirFromTree(dir, tree, options)
+  output = cmd + ' ' + info.me.path;
  } else {
-  output = 'Cannot ' + cmd.toLowerCase() + ' ' + dir + ' - ' + info.parent.path + ' does not exist';
+  output = cmd + ' ' + dir + '\n';
+  output += 'Cannot ' + cmd.toLowerCase() + ' ' + dir + ' - ' + info.parent.path + ' does not exist';
  }
 
  return output + '\n'

@@ -29,12 +29,10 @@ var _delField = function (tree, dir) {
 
 
 async function delDirFromPositionInTree(dir, pos, tree, options) {
-
  return delDirFromTree(pos + '/' + dir, tree, options);
 }
 
 async function delDirFromTree(dir, tree, options) {
-
  _delField(tree, dir);
  return treeInfo.getDirInfo(dir, tree, options);
 }

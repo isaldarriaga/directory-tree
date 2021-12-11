@@ -4,7 +4,7 @@ const cmd = "LIST";
 
 async function execute(tree, options) {
  const cmdOutput = cmd + "\n";
- const treeOutput = treeFormat.getTreeAsString(tree);
+ const treeOutput = await treeFormat.getTreeAsString(tree);
  return cmdOutput + treeOutput;
 }
 

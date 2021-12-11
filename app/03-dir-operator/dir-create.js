@@ -15,7 +15,8 @@ async function execute(dir, pos, tree, options) {
   }
   output = cmd + ' ' + info.me.path;
  } else {
-  output = 'Cannot ' + cmd.toLowerCase() + ' ' + dir + ' - ' + info.parent.path + ' does not exist';
+  output = cmd + ' ' + dir + '\n';
+  output += 'Cannot ' + cmd.toLowerCase() + ' ' + dir + ' - ' + info.parent.path + ' does not exist';
  }
 
  return output + '\n';

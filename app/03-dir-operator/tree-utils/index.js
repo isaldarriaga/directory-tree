@@ -1,8 +1,9 @@
 module.exports = {
  treeAdd: require('./tree-add'),
+ treeDelete: require('./tree-delete'),
  treeFind: require('./tree-find'),
- treeInfo: require('./tree-info'),
  treeFormat: require('./tree-format'),
- treeMove: require('./tree-add'),
- treeNesting: require('./tree-nesting'),
+ treeInfo: require('./tree-info'),
+ treeMove: require('./tree-move'),
+ treeNesting: require('./tree-nesting')
 }
