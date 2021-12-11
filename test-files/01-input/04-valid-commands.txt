@@ -1,0 +1,16 @@
+MOVE grains/squash vegetables
+CREATE fruits
+CREATE vegetables
+DELETE foods/fruits/apples
+CREATE fruits/apples
+CREATE fruits/apples/fuji
+LIST
+CREATE grains/squash
+CREATE foods
+MOVE grains foods
+MOVE fruits foods
+CREATE grains
+MOVE vegetables foods
+LIST
+DELETE fruits/apples
+LIST
