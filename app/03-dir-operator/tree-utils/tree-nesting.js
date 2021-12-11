@@ -1,5 +1,5 @@
 
-var getNestedObject = function (obj, field) {
+var getNestedObject = function (field, obj) {
  if (!obj[field]) {
   var caretPos = field.indexOf('[');
   if (caretPos !== -1) {

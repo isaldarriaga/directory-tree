@@ -9,7 +9,7 @@ var __extractValue = function (value) {
  }
 };
 
-var _addField = function (tree, dir, value) {
+var _addField = function (dir, tree, value, options) {
  var modified = false;
  if (dir) {
   if (typeof tree === 'object' && Array.isArray(tree) && tree.length > 0) {
@@ -21,13 +21,13 @@ var _addField = function (tree, dir, value) {
   } else {
    // build nested nodes in model
    var dirNames = dir.split('/');
-   var dirObject = treeNesting.getNestedObject(tree, dirNames[0]);
+   var dirObject = treeNesting.getNestedObject(dirNames[0], tree);
    for (var i = 1; i < dirNames.length; i++) {
     if (i === dirNames.length - 1) {
      dirObject[dirNames[i]] = __extractValue(value);
      modified = true;
     } else {
-     dirObject = treeNesting.getNestedObject(dirObject, dirNames[i]);
+     dirObject = treeNesting.getNestedObject(dirNames[i], dirObject);
     }
    }
   }
@@ -43,7 +43,7 @@ async function addDirToPositionInTree(dir, pos, tree, options) {
 
 async function addDirToTree(dir, tree, options) {
 
- _addField(tree, dir, {});
+ _addField(dir, tree, {}, options);
  return treeInfo.getDirInfo(dir, tree, options);
 }
 
