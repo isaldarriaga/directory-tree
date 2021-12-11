@@ -1,26 +1,26 @@
-const treeUtils = require('./tree-utils');
+const { treeInfo, treeAdd } = require('./tree-utils');
 
 const cmd = "CREATE";
 
 async function execute(dir, pos, tree, options) {
 
-  var info = await treeUtils.info.getDirInfo(pos ? pos + '/' + dir : dir, tree);
-  var output = '';
+ var info = await treeInfo.getDirInfo(pos ? pos + '/' + dir : dir, tree);
+ var output = '';
 
-  if (info.parent.exists) {
-    if (!pos) {
-      info = await treeUtils.add.addDirToTree(dir, tree, options)
-    } else {
-      info = await treeUtils.add.addDirToPositionInTree(dir, pos, tree, options);
-    }
-    output = cmd + ' ' + info.me.path;
+ if (info.parent.exists) {
+  if (!pos) {
+   info = await treeAdd.addDirToTree(dir, tree, options)
   } else {
-    output = 'Cannot ' + cmd.toLowerCase() + ' ' + dir + ' - ' + info.parent.path + ' does not exist';
+   info = await treeAdd.addDirToPositionInTree(dir, pos, tree, options);
   }
+  output = cmd + ' ' + info.me.path;
+ } else {
+  output = 'Cannot ' + cmd.toLowerCase() + ' ' + dir + ' - ' + info.parent.path + ' does not exist';
+ }
 
-  return output + '\n';
+ return output + '\n';
 }
 
 module.exports = {
-  execute: execute
+ execute: execute
 }

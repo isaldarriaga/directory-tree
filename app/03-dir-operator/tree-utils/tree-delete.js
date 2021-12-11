@@ -1,22 +1,14 @@
 const treeInfo = require('./tree-info');
 const treeNesting = require('./tree-nesting');
 
-var __extractValue = function (value) {
- if (typeof value === 'object' && Array.isArray(value)) {
-  return value[0];
- } else {
-  return value;
- }
-};
-
-var _addField = function (tree, dir, value) {
+var _delField = function (tree, dir) {
  var modified = false;
  if (dir) {
   if (typeof tree === 'object' && Array.isArray(tree) && tree.length > 0) {
    tree = tree[0];
   }
   if (dir.indexOf('/') === -1) {
-   tree[dir] = __extractValue(value);
+   delete tree[dir];
    modified = true;
   } else {
    // build nested nodes in model
@@ -24,7 +16,7 @@ var _addField = function (tree, dir, value) {
    var dirObject = treeNesting.getNestedObject(tree, dirNames[0]);
    for (var i = 1; i < dirNames.length; i++) {
     if (i === dirNames.length - 1) {
-     dirObject[dirNames[i]] = __extractValue(value);
+     delete dirObject[dirNames[i]];
      modified = true;
     } else {
      dirObject = treeNesting.getNestedObject(dirObject, dirNames[i]);
@@ -36,18 +28,18 @@ var _addField = function (tree, dir, value) {
 };
 
 
-async function addDirToPositionInTree(dir, pos, tree, options) {
+async function delDirFromPositionInTree(dir, pos, tree, options) {
 
- return addDirToTree(pos + '/' + dir, tree, options);
+ return delDirFromTree(pos + '/' + dir, tree, options);
 }
 
-async function addDirToTree(dir, tree, options) {
+async function delDirFromTree(dir, tree, options) {
 
- _addField(tree, dir, {});
+ _delField(tree, dir);
  return treeInfo.getDirInfo(dir, tree, options);
 }
 
 module.exports = {
- addDirToPositionInTree: addDirToPositionInTree,
- addDirToTree: addDirToTree
+ delDirFromPositionInTree: delDirFromPositionInTree,
+ delDirFromTree: delDirFromTree
 }
