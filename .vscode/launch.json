@@ -21,6 +21,20 @@
     "<node_internals>/**"
    ],
    "program": "${workspaceFolder}/directories.js"
+  },
+  {
+   "type": "node",
+   "name": "vscode-jest-tests",
+   "request": "launch",
+   "console": "integratedTerminal",
+   "internalConsoleOptions": "neverOpen",
+   "disableOptimisticBPs": true,
+   "program": "${workspaceFolder}/~/.config/nvm/versions/node/v15.13.0/bin/jest",
+   "cwd": "${workspaceFolder}",
+   "args": [
+    "--runInBand",
+    "--watchAll=false"
+   ]
   }
  ]
 }

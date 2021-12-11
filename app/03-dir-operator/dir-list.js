@@ -1,7 +1,9 @@
-async function run(options) {
+const cmd = "LIST";
 
+async function execute(tree, options) {
+  return cmd + "\n";
 }
 
 module.exports = {
-  run: run
+  execute: execute
 }
