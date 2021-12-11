@@ -4,13 +4,16 @@ const cmd = "CREATE";
 
 async function execute(dir, pos, tree, options) {
 
-  const info = await utils.getDirInfo(dir, tree);
+  var info = await utils.getDirInfo(pos ? pos + '/' + dir : dir, tree);
   var output = '';
 
   if (info.parent.exists) {
-    // TODO: add it to tree
-
-    output = (pos ? cmd + ' ' + pos + '/' + dir : cmd + ' ' + dir);
+    if (!pos) {
+      info = await utils.addDirToTree(dir, tree, options)
+    } else {
+      info = await utils.addDirToPositionInTree(dir, pos, tree, options);
+    }
+    output = cmd + ' ' + info.me.path;
   } else {
     output = 'Cannot ' + cmd.toLowerCase() + ' ' + dir + ' - ' + info.parent.path + ' does not exist';
   }

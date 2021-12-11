@@ -25,12 +25,12 @@ var _addField = function (model, field, value) {
     if (typeof model === 'object' && Array.isArray(model) && model.length > 0) {
       model = model[0];
     }
-    if (field.indexOf('.') === -1) {
+    if (field.indexOf('/') === -1) {
       model[field] = __extractValue(value);
       modified = true;
     } else {
       // build nested nodes in model
-      var tree = field.split('.');
+      var tree = field.split('/');
       var obj = __getNestedObject(model, tree[0]);
       for (var i = 1; i < tree.length; i++) {
         if (i === tree.length - 1) {
@@ -60,25 +60,19 @@ function _deepFind(obj, path) {
   return current;
 }
 
-// async function dirExistsInPositionOfTree(dir, pos, tree, options) {
+async function dirExistsInPositionOfTree(dir, pos, tree, options) {
 
-//   return _deepFind(tree, pos + '/' + dir) ? true : false;
-// }
+  return _deepFind(tree, pos + '/' + dir) ? true : false;
+}
 
 async function dirExistsInTree(dir, tree, options) {
 
-  return _deepFind(tree, dir) ? true : false;
+  const value = _deepFind(tree, dir);
+  if (value) {
+    return true;
+  }
+  return false;
 }
-
-// async function addDirToPositionInTree(dir, pos, tree, options) {
-
-//   if (dirExistsInTree(dir, pos, tree, options)) {
-//     _addField(tree, pos + '/' + dir, {});
-//     return true;
-//   } else {
-//     return false;
-//   }
-// }
 
 async function getDirInfo(dir, tree, options) {
 
@@ -100,14 +94,14 @@ async function getDirInfo(dir, tree, options) {
   var curPath = "", exists, output;
 
   for (const dirName of dirNames) {
-    curPath += (dirName + '/');
+    curPath += dirName;
     exists = await dirExistsInTree(curPath, tree);
 
     if (exists) {
       if (curPath !== parent) {
         continue;
       } else {
-        output = {
+        return {
           parent: {
             exists: true,
             path: parent
@@ -119,7 +113,7 @@ async function getDirInfo(dir, tree, options) {
         }
       }
     } else {
-      output = {
+      return {
         parent: {
           exists: false,
           path: parent
@@ -130,17 +124,29 @@ async function getDirInfo(dir, tree, options) {
         }
       }
     }
+    curPath += '/'
   }
-  return output;
+}
+
+async function addDirToPositionInTree(dir, pos, tree, options) {
+
+  return addDirToTree(pos + '/' + dir, tree, options);
+}
+
+async function addDirToTree(dir, tree, options) {
+
+  _addField(tree, dir, {});
+  return getDirInfo(dir, tree, options);
 }
 
 module.exports = {
 
   dirExistsInTree: dirExistsInTree,
-  // dirExistsInPositionOfTree: dirExistsInPositionOfTree,
+  dirExistsInPositionOfTree: dirExistsInPositionOfTree,
 
   getDirInfo: getDirInfo,
   // parentsExistsInPositionOfTree: parentsExistsInPositionOfTree,
 
-  // addDirToPositionInTree: addDirToPositionInTree
+  addDirToPositionInTree: addDirToPositionInTree,
+  addDirToTree: addDirToTree
 }
