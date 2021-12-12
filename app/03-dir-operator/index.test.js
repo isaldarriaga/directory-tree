@@ -11,10 +11,10 @@ describe('The dir-operator module', () => {
 
  test("creates 100 dirs in the root directory", async () => {
 
-  const validFile = process.env.DIR_OPERATOR_VALID_01;
+  const inputFile = process.env.DIR_OPERATOR_VALID_01;
 
   const fileParser = require('../02-file-parser');
-  const commands = await fileParser.getCommands(validFile, options);
+  const commands = await fileParser.getCommands(inputFile, options);
 
   const dirOperator = require('.');
   const received = await dirOperator.runCommands(commands, options);
@@ -33,40 +33,47 @@ describe('The dir-operator module', () => {
 
  });
 
- // test("create", async () => {
+ test("create a second level dir with 2 valid commands", async () => {
 
- //  const invalidCommandFile = process.env.DIR_OPERATOR_INVALID_01;
+  const inputFile = process.env.DIR_OPERATOR_VALID_02;
 
- //  process.argv.push('--input-file', invalidCommandFile);
+  const fileParser = require('../02-file-parser');
+  const commands = await fileParser.getCommands(inputFile, options);
 
- //  const dirOperator = require('.');
+  const dirOperator = require('.');
+  const received = await dirOperator.runCommands(commands, options);
 
- //  expect.assertions(1);
+  const expected = {
+   msg: await fs.readFileSync(process.env.DIR_OPERATOR_EXPECTED_VALID_02, 'utf8'),
+   tree: {
+    level_1_1: {
+     level_2_1: {}
+    }
+   }
+  };
 
- //  try {
- //   await dirOperator.runCommands(invalidCommandFile, options)
- //  } catch (e) {
- //   expect(e.msg).toBe(process.env.ERR_INPUT_FILE_HAS_INVALID_COMMAND);
- //  }
+  expect(received.msg).toBe(expected.msg);
+  expect(JSON.stringify(received.tree)).toBe(JSON.stringify(expected.tree));
+ });
 
- // });
+ test("reject a second level dir if 1st level doesn't exist", async () => {
 
- // test("reject file with wrong number of arguments for command", async () => {
+  const inputFile = process.env.DIR_OPERATOR_INVALID_01;
 
- //  const invalidNumArgsFile = process.env.DIR_OPERATOR_INVALID_02;
+  const fileParser = require('../02-file-parser');
+  const commands = await fileParser.getCommands(inputFile, options);
 
- //  process.argv.push('--input-file', invalidNumArgsFile);
+  const dirOperator = require('.');
+  const received = await dirOperator.runCommands(commands, options);
 
- //  const dirOperator = require('.');
+  const expected = {
+   msg: await fs.readFileSync(process.env.DIR_OPERATOR_EXPECTED_INVALID_01, 'utf8'),
+   tree: {}
+  };
 
- //  expect.assertions(1);
+  expect(received.msg).toBe(expected.msg);
+  expect(JSON.stringify(received.tree)).toBe(JSON.stringify(expected.tree));
 
- //  try {
- //   await dirOperator.runCommands(invalidNumArgsFile, options)
- //  } catch (e) {
- //   expect(e.msg).toBe(process.env.ERR_COMMAND_WITH_INVALID_NUM_ARGS);
- //  }
-
- // });
+ });
 
 });
