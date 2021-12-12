@@ -110,32 +110,38 @@ Usage: directories [options]
 
 Options:
   -V, --version            output the version number
-  -f, --input-file <path>  path to the file with commands. Overwrites the APP_VALID_01 environment variable. (default:
-                           "./test-files/01-input/01-valid-commands.txt")
+  -f, --input-file <path>  path to the file with commands. Overwrites the APP_VALID_01 environment variable. (default: "./test-files/00-app/valid/01.txt")
   -h, --help               display help for command
+
 ```
-3. Execute the program with a different file:
+3. Execute the program with a different valid file:
 
 First copy your file into the test-files folder, like
 ```
-> cp <my-file> ./test-files/01-input/<num>-<filename>.txt
+> cp <my-file> ./test-files/00-app/valid/<num>.txt
 ```
 Then run the program again:
 
 ```
-> node directories.js -f ./test-files/01-input/<num>-<filename>.txt
+> node directories.js -f ./test-files/00-app/valid/<num>.txt
 ```
 For example:
 
 ```
-> node directories.js -f test-files/01-input/04-valid-commands.txt
+> node directories.js -f ./test-files/00-app/valid/02.txt
 ```
 
 Note: use --file-name instead of -f, this way:
 
 ```
-> node directories.js --file-name test-files/01-input/04-valid-commands.txt
+> node directories.js --file-name ./test-files/00-app/valid/02.txt
 ```
+
+NOTE: 
+
+- Files with valid commands are expected to be saved into the ``./test-files/00-app/valid`` folder, and their respective expected output into ``./test-files/03-dir-operator/expected/valid``
+
+- Files with INVALID commands are expected to be saved into the ``./test-files/00-app/invalid`` folder, and their respective expected output into ``./test-files/03-dir-operator/expected/invalid``
 
 # Testing
 
@@ -147,7 +153,7 @@ Note: use --file-name instead of -f, this way:
 
 2. execute integration and unit tests
 ```
-> clear && jest directories && jest ./01-cli-manager && jest ./02-file-parser
+> clear && jest directories && jest ./01-cli-manager && jest ./02-file-parser && jest ./03-tree-operator
 ```
 
 Note: you can run test individually for the desired module (folder), or the integration test only by editing the command above.

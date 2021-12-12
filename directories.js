@@ -12,7 +12,9 @@ async function main() {
   throw _dotenv.error
  }
 
- console.log(await app.run(options));
+ const output = await app.run(options);
+
+ console.log(output.msg);
 
 }
 
