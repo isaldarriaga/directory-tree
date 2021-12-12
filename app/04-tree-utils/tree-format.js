@@ -5,7 +5,7 @@ function _isEmptyObject(obj) {
   && Object.getPrototypeOf(obj) === Object.prototype;
 }
 
-function getTreeAsString(tree, level) {
+function getTreeAsString(tree, level, options) {
 
  level = level ? level : 0;
  const spaces = new Array(2 * level + 1).join(' ');

@@ -1,5 +1,6 @@
 module.exports = {
  treeAdd: require('./tree-add'),
+ treeCopy: require('./tree-copy'),
  treeDelete: require('./tree-delete'),
  treeFind: require('./tree-find'),
  treeFormat: require('./tree-format'),

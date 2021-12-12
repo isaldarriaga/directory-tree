@@ -283,8 +283,6 @@ NOTE:
 
 - Files for individual modules are expected to be saved into the ``./app/<module>/test-files/`` folder
 
-- The module does not include automated tests yet.
-
 # Testing
 
 1. Install the ```jest``` testing framework 
