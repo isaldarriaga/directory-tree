@@ -32,9 +32,9 @@ describe('The cli-manager module', () => {
 
  test("reject a file that doesn't exist", async () => {
 
-  const unexistingFile = process.env.CLI_MANAGER_VALID_01 + ".rnd-" + Math.ceil(Math.random() * 1000);
+  const inputFile = process.env.CLI_MANAGER_VALID_01 + ".rnd-" + Math.ceil(Math.random() * 1000);
 
-  process.argv.push('--input-file', unexistingFile);
+  process.argv.push('--input-file', inputFile);
 
   const cli = require('.');
 
