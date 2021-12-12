@@ -146,9 +146,11 @@ Note: use apt-get or brew in other environments.
 
 2. Extract the zip file to ```<folder>``` and install module dependencies, or clone this repo
 
-cd ```<folder>```
+```
+cd <folder>
 npm install
 ls -al
+```
 
 ### Customization
 
