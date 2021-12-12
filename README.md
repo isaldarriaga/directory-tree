@@ -32,22 +32,42 @@ ls -al
 2. the file should look like this
 
 ```
-# limit the output on screen: silent, fatal, error, warn, info, debug, trace
+# ==== debugging
+# limits the output on screen: silent, fatal, error, warn, info, debug, trace
 DEBUG_LEVEL=fatal
 
-# use default values when no cli arguments are received:
-VALID_INPUT_FILE=./test-files/01-input/01-valid-commands.txt
-
-# useful on tests
-EXPECTED_OUTPUT_FILE=./test-files/02-output/01-expected.txt
-EXPECTED_COMMANDS_FILE=./test-files/03-commands/01-expected.txt
-INVALID_COMMAND_FILE=./test-files/01-input/02-invalid-command.txt
-INVALID_NUM_ARGS_FILE=./test-files/01-input/03-command-with-wrong-arguments.txt
-
-# error messages
+# ==== error messages
 ERR_INPUT_FILE_DOES_NOT_EXIST="input file does not exist"
 ERR_INPUT_FILE_HAS_INVALID_COMMAND="input file has an invalid command"
 ERR_COMMAND_WITH_INVALID_NUM_ARGS="input file has a command with invalid number of arguments"
+
+# ==== test files
+
+# valid input for all modules
+# APP_VALID_01 --> this file is also loaded by default, overwriding the -f or --file-name cli argument
+APP_VALID_01=./test-files/00-app/valid/01.txt
+CLI_MANAGER_VALID_01=./test-files/01-cli-manager/valid/01.txt
+FILE_PARSER_VALID_01=./test-files/02-file-parser/valid/01.txt
+DIR_OPERATOR_VALID_01=./test-files/03-dir-operator/valid/01.txt
+
+# expected output for valid inputs for all modules
+APP_EXPECTED_VALID_01=./test-files/00-app/expected/valid/01.txt
+CLI_MANAGER_EXPECTED_VALID_01=./test-files/01-cli-manager/expected/valid/01.txt
+FILE_PARSER_EXPECTED_VALID_01=./test-files/02-file-parser/expected/valid/01.txt
+DIR_OPERATOR_EXPECTED_VALID_01=./test-files/03-dir-operator/expected/valid/01.txt
+
+# INVALID input for all modules
+FILE_PARSER_INVALID_01=./test-files/02-file-parser/invalid/01.txt
+FILE_PARSER_INVALID_02=./test-files/02-file-parser/invalid/02.txt
+
+DIR_OPERATOR_INVALID_01=./test-files/03-dir-operator/invalid/01.txt
+DIR_OPERATOR_INVALID_02=./test-files/03-dir-operator/invalid/02.txt
+
+# expected output for INVALID inputs for all modules
+FILE_PARSER_EXPECTED_INVALID_01=./test-files/02-file-parser/expected/invalid/01.txt
+FILE_PARSER_EXPECTED_INVALID_02=./test-files/02-file-parser/expected/invalid/02.txt
+
+
 ```
 
 3. Change default arguments
@@ -90,7 +110,7 @@ Usage: directories [options]
 
 Options:
   -V, --version            output the version number
-  -f, --input-file <path>  path to the file with commands. Overwrites the VALID_INPUT_FILE environment variable. (default:
+  -f, --input-file <path>  path to the file with commands. Overwrites the APP_VALID_01 environment variable. (default:
                            "./test-files/01-input/01-valid-commands.txt")
   -h, --help               display help for command
 ```

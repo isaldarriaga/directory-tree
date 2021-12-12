@@ -1,4 +1,4 @@
-const { treeInfo, treeAdd } = require('./tree-utils');
+const { treeInfo, treeAdd } = require('../04-tree-utils');
 
 const cmd = "CREATE";
 

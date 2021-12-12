@@ -1,4 +1,4 @@
-const { treeInfo, treeMove } = require('./tree-utils');
+const { treeInfo, treeMove } = require('../04-tree-utils');
 
 const cmd = "MOVE";
 

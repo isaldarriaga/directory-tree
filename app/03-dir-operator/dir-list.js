@@ -1,4 +1,4 @@
-const { treeFormat } = require('./tree-utils');
+const { treeFormat } = require('../04-tree-utils');
 
 const cmd = "LIST";
 

@@ -14,7 +14,7 @@ describe('INTEGRATION: The directories app', () => {
 
   output = await app.run(options);
 
-  const expected = fs.readFileSync(process.env.EXPECTED_OUTPUT_FILE, 'utf8')
+  const expected = fs.readFileSync(process.env.APP_EXPECTED_VALID_01, 'utf8')
 
   expect(output).toBe(expected);
 

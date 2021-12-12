@@ -1,4 +1,4 @@
-const { treeInfo, treeDelete } = require('./tree-utils');
+const { treeInfo, treeDelete } = require('../04-tree-utils');
 
 const cmd = "DELETE";
 

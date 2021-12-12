@@ -8,8 +8,8 @@ function getArguments(options) {
  // CLI options definition
  program
   .option('-f, --input-file <path>',
-   'path to the file with commands. Overwrites the VALID_INPUT_FILE environment variable.',
-   process.env.VALID_INPUT_FILE);
+   'path to the file with commands. Overwrites the APP_VALID_01 environment variable.',
+   process.env.APP_VALID_01);
 
  // parse the CLI options into arguments
  program.parse(process.argv);
