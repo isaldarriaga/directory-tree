@@ -83,7 +83,7 @@ The program is modularized. Each module encapsulates its underlying logic by onl
 
 Integrate all modules. It's used by directories.js and testing code to run the application.
 
-I receive an object named ``options`` which is propagated to other modules for configuration purposes. 
+It receives an object named ``options`` which is propagated to other modules for configuration purposes. 
 
 ``options`` it's particularly used in this demo to pass the unique application logger instance (npm's ``pino``) to other modules. 
 
@@ -93,7 +93,7 @@ The caller to the app module is responsible to load the environment variables pr
 
 ### The ``01-cli-manager`` module
 
-Parses the input arguments from command line interface (cli). It uses the ``commander`` npm module.
+Parses the input arguments from command line interface (CLI). It uses the ``commander`` npm module.
 
 ### The ``02-file-parser`` module
 
@@ -115,8 +115,8 @@ The tree is returned as part of its main function in order to be validated by th
 Perform operations over the in-memory tree hold by dir-operator, like deep traversing it to find nodes, perform some CRUD actions, get information of nodes, format the node to a string representation, etc. 
 
 When getting information of a node you get:
-- info about the parent node (exist, path)
-- info of the node itself (exist, path)
+- info about the parent node (exists?, path)
+- info of the node itself (exists?, path)
 - info about children (child names in an array)
 
 Notes: 
@@ -214,7 +214,7 @@ DIR_OPERATOR_EXPECTED_INVALID_02=./app/03-dir-operator/test-files/expected/inval
 ```
 
 ## Change verbosity
-if you want see debugging output in the console
+If you want see debugging output in the console
 
 1. Install the program pino-pretty globally to format the output
 2. Edit .env file and change debug level:
