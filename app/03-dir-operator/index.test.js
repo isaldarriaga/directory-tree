@@ -9,7 +9,7 @@ const options = {
 
 describe('The dir-operator module', () => {
 
- test.skip("creates 100 dirs in the root directory", async () => {
+ test("creates 100 dirs in the root directory", async () => {
 
   const validFile = process.env.DIR_OPERATOR_VALID_01;
 
@@ -27,12 +27,9 @@ describe('The dir-operator module', () => {
    }
   };
 
-  console.log(received.msg);
-  console.log(expected.msg);
-
   expect(received.msg).toBe(expected.msg);
   expect(received.tree).toHaveProperty(expected.tree.prop);
-  expect(received.tree.length).toBe(expected.tree.length);
+  expect(Object.keys(received.tree).length).toBe(expected.tree.length);
 
  });
 
