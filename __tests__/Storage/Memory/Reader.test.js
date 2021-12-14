@@ -1,10 +1,10 @@
-import ObjectReader from "../../src/Object/ObjectReader";
+import MemoryReader from "../../../src/Storage/Memory/Reader";
 
 describe('The ObjectReader class', () => {
 
  test("finds a node in the tree object using a path and returns it", async () => {
 
-  const objectReader = new ObjectReader(
+  const memoryReader = new MemoryReader(
    {
     a: {
      b: {
@@ -14,7 +14,7 @@ describe('The ObjectReader class', () => {
     }
    });
 
-  const result = await objectReader.findProperty("a/b");
+  const result = await memoryReader.find("a/b");
 
   const expected = {
    c: { d: {} },

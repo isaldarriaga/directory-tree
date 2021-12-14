@@ -1,4 +1,4 @@
-export default class ObjectReader {
+export default class FileSystemReader {
 
  obj;
 
@@ -6,7 +6,7 @@ export default class ObjectReader {
   this.obj = obj;
  }
 
- async findProperty(pathToProperty) {
+ async find(pathToProperty) {
   var props = pathToProperty.split('/')
    , current = this.obj
    , i;

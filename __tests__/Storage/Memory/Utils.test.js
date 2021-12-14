@@ -1,15 +1,15 @@
-import ObjectUtils from "../../src/Object/ObjectUtils";
+import MemoryUtils from "../../../src/Storage/Memory/Utils";
 
 describe('The ObjectUtils class', () => {
- let objectUtils;
+ let memoryUtils;
 
  beforeEach(() => {
-  objectUtils = new ObjectUtils();
+  memoryUtils = new MemoryUtils();
  });
 
  test("tells if an object is empty", () => {
 
-  const result = objectUtils.isEmpty({});
+  const result = memoryUtils.isEmpty({});
 
   const expected = true;
 
@@ -21,10 +21,10 @@ describe('The ObjectUtils class', () => {
 
   const expected = { a: { b: {} } };
 
-  var result = objectUtils.getValueSafely([expected]);
+  var result = memoryUtils.getValueSafely([expected]);
   expect(result).toEqual(expected);
 
-  result = objectUtils.getValueSafely(expected);
+  result = memoryUtils.getValueSafely(expected);
   expect(result).toEqual(expected);
 
  });
@@ -36,7 +36,7 @@ describe('The ObjectUtils class', () => {
    obj: { a: { b: { c: {} } } }
   };
 
-  const result = objectUtils.getValueOf(input.prop, input.obj);
+  const result = memoryUtils.getValueOf(input.prop, input.obj);
 
   const expected = { b: { c: {} } };
 

@@ -1,4 +1,4 @@
-export default class ObjectUtils {
+export default class MemoryUtils {
 
  isEmpty(obj) {
   return obj

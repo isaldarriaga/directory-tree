@@ -1,11 +1,9 @@
-import ObjectModifier from "../Object/ObjectModifier";
-
 export default class TreeReader {
 
- tree;
+ #tree;
 
- constructor(tree) {
-  this.tree = new ObjectModifier(tree);
+ constructor(IStorage) {
+  this.#tree = IStorage;
  }
 
  async dirExistsInPosition(dir, pos) {
@@ -21,7 +19,7 @@ export default class TreeReader {
  }
 
  async findDir(dir) {
-  return await this.tree.findProperty(dir);
+  return await this.#tree.find(dir);
  }
 
  async getDirInfo(dir) {
@@ -87,7 +85,7 @@ export default class TreeReader {
  // call it without arguments to print from root!
  async toString(tree, level) {
 
-  tree = tree ? tree : this.tree;
+  tree = tree ? tree : this.#tree;
   level = level ? level : 0;
 
   const spaces = new Array(2 * level + 1).join(' ');
@@ -97,7 +95,7 @@ export default class TreeReader {
   const siblings = Object.keys(tree).sort((a, b) => a.localeCompare(b));
 
   for (const dir of siblings) {
-   if (this.tree.objUtils.isEmpty(tree[dir])) {
+   if (this.#tree.utils.isEmpty(tree[dir])) {
     output += spaces + dir + '\n';
    } else {
     output += spaces + dir + '\n' + toString(tree[dir], level + 1);

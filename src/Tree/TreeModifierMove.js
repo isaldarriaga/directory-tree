@@ -1,9 +1,6 @@
 import TreeModifierDelete from "./TreeModifierDelete";
 
-export default class TreeModifierMove extends TreeModifierDelete {
-
- // note: inheriting from TreeModifierDelete brings all methods
- // from TreeModifierAdd and TreeModifierCopy too
+export default class TreeModifierMove extends TreeReader {
 
  constructor(tree) {
   super(tree);

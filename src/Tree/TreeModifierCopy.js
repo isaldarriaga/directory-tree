@@ -1,6 +1,6 @@
 import TreeReader from "./TreeReader";
 
-export default class TreeModifierCopy extends TreeModifierAdd {
+export default class TreeModifierCopy extends TreeReader {
 
  constructor(tree) {
   super(tree);

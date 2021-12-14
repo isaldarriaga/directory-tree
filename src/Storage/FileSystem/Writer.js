@@ -1,13 +1,13 @@
-import ObjectReader from "./ObjectReader";
-import ObjectUtils from "./ObjectUtils";
+import FileSystemReader from "./FileSystemReader";
+import FileUtils from "./Utils";
 
-export default class ObjectModifier extends ObjectReader {
+export default class FileSystemWriter extends FileSystemReader {
 
- objUtils;
+ utils;
 
  constructor(obj) {
   super(obj);
-  this.objUtils = new ObjectUtils();
+  this.utils = new FileUtils();
  }
 
  addProperty(property, value) {
@@ -17,18 +17,18 @@ export default class ObjectModifier extends ObjectReader {
     this.obj = this.obj[0];
    }
    if (property.indexOf('/') === -1) {
-    this.obj[property] = this.objUtils.getValueSafely(value);
+    this.obj[property] = this.utils.getValueSafely(value);
     modified = true;
    } else {
     // build nested nodes in model
     var propNames = property.split('/');
-    var propNode = this.objUtils.getValueOf(propNames[0], this.obj);
+    var propNode = this.utils.getValueOf(propNames[0], this.obj);
     for (var i = 1; i < propNames.length; i++) {
      if (i === propNames.length - 1) {
-      propNode[propNames[i]] = this.objUtils.getValueSafely(value);
+      propNode[propNames[i]] = this.utils.getValueSafely(value);
       modified = true;
      } else {
-      propNode = this.objUtils.getValueOf(propNames[i], propNode);
+      propNode = this.utils.getValueOf(propNames[i], propNode);
      }
     }
    }
@@ -48,13 +48,13 @@ export default class ObjectModifier extends ObjectReader {
    } else {
     // build nested nodes in model
     var propNames = property.split('/');
-    var propNode = this.objUtils.getValueOf(propNames[0], this.obj);
+    var propNode = this.utils.getValueOf(propNames[0], this.obj);
     for (var i = 1; i < propNames.length; i++) {
      if (i === propNames.length - 1) {
       delete propNode[propNames[i]];
       modified = true;
      } else {
-      propNode = this.objUtils.getValueOf(propNames[i], propNode);
+      propNode = this.utils.getValueOf(propNames[i], propNode);
      }
     }
    }
