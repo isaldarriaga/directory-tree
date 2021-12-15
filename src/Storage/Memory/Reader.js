@@ -1,13 +1,18 @@
 export default class MemoryReader {
 
- #obj;
- constructor(obj) {
-  this.#obj = obj;
+ IStorage;
+ constructor(IStorage) {
+  this.IStorage = IStorage;
+ }
+
+ get storage() {
+  // ensure read-only from outside
+  return JSON.parse(JSON.stringify(this.IStorage.storage));
  }
 
  async find(item) {
   var items = item.split('/')
-   , current = this.#obj
+   , current = this.IStorage.storage
    , i;
 
   for (i = 0; i < items.length; ++i) {

@@ -1,6 +1,6 @@
 import MemoryUtils from "../../../src/Storage/Memory/Utils";
 
-describe('The ObjectUtils class', () => {
+describe('The MemoryUtils class', () => {
  let memoryUtils;
 
  beforeEach(() => {

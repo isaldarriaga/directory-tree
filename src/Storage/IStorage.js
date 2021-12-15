@@ -1,23 +1,23 @@
 export default class IStorage {
- #storage;
- constructor(storage) {
-  this.#storage = storage;
+
+ storage;
+ utils;
+
+ constructor(storage, utils) {
+  this.storage = storage;
+  this.utils = utils;
  }
 
  get storage() {
   // ensure read-only from outside
-  return JSON.parse(JSON.stringify(this.#storage));
- }
-
- get utils() {
-  return this.#storage.utils;
+  return JSON.parse(JSON.stringify(this.storage));
  }
 
  find(item) {
   throw new Error('Not implemented');
  }
 
- add(item) {
+ add(item, value) {
   throw new Error('Not implemented');
  }
 

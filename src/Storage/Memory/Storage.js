@@ -1,29 +1,26 @@
 import IStorage from "../IStorage";
 import MemoryReader from "./Reader";
+import MemoryUtils from "./Utils";
 import MemoryWriter from "./Writer";
-import MemoryUtils from "../Utils";
 
 export default class MemoryStorage extends IStorage {
 
- #protected; // hold references to private members in parent
-
  constructor(storage) {
-  super(storage);
-  this.#protected.storage = storage;
+  super(storage, new MemoryUtils());
  }
 
- // overwrites
- find(item) {
-  new MemoryReader(this.#protected.storage).find(item);
+ async find(item) {
+  const memoryReader = new MemoryReader(this);
+  return await memoryReader.find(item);
  }
 
- // overwrites
- add(item) {
-  new MemoryWriter(this.#protected.storage).add(item);
+ async add(item, value) {
+  const memoryWriter = new MemoryWriter(this)
+  return await memoryWriter.add(item, value);
  }
 
- // overwrites
- del(item) {
-  new MemoryWriter(this.#protected.storage).del(item);
+ async del(item) {
+  const memoryWriter = new MemoryWriter(this)
+  return await memoryWriter.del(item);
  }
 }

@@ -1,4 +1,19 @@
 {
+ "name": "directory-tree",
+ "version": "1.0.0",
+ "description": "",
+ "main": "directories.js",
+ "repository": {
+  "type": "git",
+  "url": "git+https://github.com/isaldarriaga/directory-tree.git"
+ },
+ "keywords": [],
+ "author": "",
+ "license": "ISC",
+ "bugs": {
+  "url": "https://github.com/isaldarriaga/directory-tree/issues"
+ },
+ "homepage": "https://github.com/isaldarriaga/directory-tree#readme",
  "dependencies": {
   "commander": "^8.2.0",
   "dotenv": "^10.0.0",

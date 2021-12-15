@@ -1,13 +1,18 @@
 export default class TreeReader {
 
- #tree;
+ IStorage;
 
  constructor(IStorage) {
-  this.#tree = IStorage;
+  this.IStorage = IStorage;
  }
 
- async dirExistsInPosition(dir, pos) {
-  return await this.dirExists(pos + '/' + dir);
+ get storage() {
+  // ensure read-only from outside
+  return JSON.parse(JSON.stringify(this.IStorage.storage));
+ }
+
+ async findDir(dir) {
+  return await this.IStorage.find(dir);
  }
 
  async dirExists(dir) {
@@ -18,8 +23,8 @@ export default class TreeReader {
   return false;
  }
 
- async findDir(dir) {
-  return await this.#tree.find(dir);
+ async dirExistsInPosition(dir, pos) {
+  return await this.dirExists(pos + '/' + dir);
  }
 
  async getDirInfo(dir) {
@@ -85,7 +90,7 @@ export default class TreeReader {
  // call it without arguments to print from root!
  async toString(tree, level) {
 
-  tree = tree ? tree : this.#tree;
+  tree = tree ? tree : this.IStorage.storage;
   level = level ? level : 0;
 
   const spaces = new Array(2 * level + 1).join(' ');
@@ -95,10 +100,10 @@ export default class TreeReader {
   const siblings = Object.keys(tree).sort((a, b) => a.localeCompare(b));
 
   for (const dir of siblings) {
-   if (this.#tree.utils.isEmpty(tree[dir])) {
+   if (this.IStorage.utils.isEmpty(tree[dir])) {
     output += spaces + dir + '\n';
    } else {
-    output += spaces + dir + '\n' + toString(tree[dir], level + 1);
+    output += spaces + dir + '\n' + await this.toString(tree[dir], level + 1);
    }
   }
   return output;
