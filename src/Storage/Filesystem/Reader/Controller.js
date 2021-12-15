@@ -1,7 +1,6 @@
-export default class FSWriter {
+export default class FSReaderController {
 
  IStorage;
-
  constructor(IStorage) {
   this.IStorage = IStorage;
  }
@@ -11,11 +10,7 @@ export default class FSWriter {
   return JSON.parse(JSON.stringify(this.IStorage.storage));
  }
 
- add(item, value) {
-  throw new Error('Not implemented');
- }
-
- del(item) {
+ async find(item) {
   throw new Error('Not implemented');
  }
 

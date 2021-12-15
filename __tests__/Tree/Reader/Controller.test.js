@@ -1,17 +1,17 @@
-import MemoryStorage from "../../src/Storage/Memory/Storage";
-import TreeReader from "../../src/Tree/Reader";
+import MemoryService from "../../../src/Storage/Memory/Service";
+import TreeReaderController from "../../../src/Tree/Reader/Controller";
 
-describe('The TreeReader class', () => {
+describe('The TreeReaderController class', () => {
 
  let treeReader;
 
  beforeEach(() => {
-  treeReader = new TreeReader(new MemoryStorage({ a: { b: { c: { d: {} }, e: { f: {} } } } }));
+  treeReader = new TreeReaderController(new MemoryService({ a: { b: { c: { d: {} }, e: { f: {} } } } }));
  });
 
- test("finds a dir in the tree", async () => {
+ test("finds a node in the tree", async () => {
 
-  const result = await treeReader.findDir("a/b");
+  const result = await treeReader.findNode("a/b");
 
   const expected = { c: { d: {} }, e: { f: {} } };
 
@@ -37,7 +37,7 @@ describe('The TreeReader class', () => {
 
  test("returns the info of a node in the tree", async () => {
 
-  const received = await treeReader.getDirInfo("a/b");
+  const received = await treeReader.getNodeInfo("a/b");
 
   const expected = {
    parent: {

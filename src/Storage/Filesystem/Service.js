@@ -1,9 +1,7 @@
 import IStorage from "../IStorage";
-import FSReader from "./Reader";
 import FSUtils from "./Utils";
-import FSWriter from "./Writer";
 
-export default class FSStorage extends IStorage {
+export default class FSService extends IStorage {
 
  constructor(storage) {
   super(storage, new FSUtils());

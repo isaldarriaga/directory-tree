@@ -1,4 +1,4 @@
-export default class TreeReader {
+export default class TreeReaderController {
 
  IStorage;
 
@@ -11,26 +11,26 @@ export default class TreeReader {
   return JSON.parse(JSON.stringify(this.IStorage.storage));
  }
 
- async findDir(dir) {
-  return await this.IStorage.find(dir);
+ async findNode(node) {
+  return await this.IStorage.find(node);
  }
 
- async dirExists(dir) {
-  const node = await this.findDir(dir);
-  if (node) {
+ async nodeExists(node) {
+  const result = await this.findNode(node);
+  if (result) {
    return true;
   }
   return false;
  }
 
- async dirExistsInPosition(dir, pos) {
-  return await this.dirExists(pos + '/' + dir);
+ async nodeExistsInPosition(node, pos) {
+  return await this.nodeExists(pos + '/' + node);
  }
 
- async getDirInfo(dir) {
+ async getNodeInfo(node) {
 
-  const parent = dir.substring(0, dir.lastIndexOf('/'));
-  const me = await this.findDir(dir);
+  const parent = node.substring(0, node.lastIndexOf('/'));
+  const me = await this.findNode(node);
   const children = me ? Object.keys(me).sort((a, b) => a.localeCompare(b)) : [];
 
   if (parent.length === 0) {
@@ -41,18 +41,18 @@ export default class TreeReader {
      path: ''
     },
     me: {
-     exists: await this.dirExists(dir),
-     path: dir
+     exists: await this.nodeExists(node),
+     path: node
     },
     children: children
    }
   }
-  const dirNames = dir.split('/');
+  const dirNames = node.split('/');
   var curDir = "", exists;
 
   for (const dirName of dirNames) {
    curDir += dirName;
-   exists = await this.dirExists(curDir);
+   exists = await this.nodeExists(curDir);
 
    if (exists) {
     if (curDir !== parent) {
@@ -65,8 +65,8 @@ export default class TreeReader {
        path: parent
       },
       me: {
-       exists: await this.dirExists(dir),
-       path: dir
+       exists: await this.nodeExists(node),
+       path: node
       },
       children: children
      }
@@ -79,7 +79,7 @@ export default class TreeReader {
      },
      me: {
       exists: false,
-      path: dir
+      path: node
      },
      children: children
     }
@@ -99,11 +99,11 @@ export default class TreeReader {
   // sort names alphabetically
   const siblings = Object.keys(tree).sort((a, b) => a.localeCompare(b));
 
-  for (const dir of siblings) {
-   if (this.IStorage.utils.isEmpty(tree[dir])) {
-    output += spaces + dir + '\n';
+  for (const node of siblings) {
+   if (this.IStorage.utils.isEmpty(tree[node])) {
+    output += spaces + node + '\n';
    } else {
-    output += spaces + dir + '\n' + await this.toString(tree[dir], level + 1);
+    output += spaces + node + '\n' + await this.toString(tree[node], level + 1);
    }
   }
   return output;

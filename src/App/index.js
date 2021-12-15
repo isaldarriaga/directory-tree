@@ -1,9 +1,9 @@
-import MemoryStorage from "../Storage/Memory/Storage";
+import MemoryService from "../Storage/Memory/Service";
 import TreeReader from "../Tree/TreeReader";
 
 export default class App {
  run() {
-  const memStorage = new MemoryStorage({
+  const memStorage = new MemoryService({
    a: {
     b: {
      c: { d: {} },

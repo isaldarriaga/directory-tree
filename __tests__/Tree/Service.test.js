@@ -1,13 +1,13 @@
-import MemoryStorage from "../../src/Storage/Memory/Storage";
-import Tree from "../../src/Tree/Tree";
+import MemoryService from "../../src/Storage/Memory/Service";
+import TreeService from "../../src/Tree/Service";
 
-describe('The Tree class', () => {
+describe('The TreeService class', () => {
 
  let tree;
 
  beforeEach(() => {
 
-  tree = new Tree(new MemoryStorage(
+  tree = new TreeService(new MemoryService(
    {
     a: {
      b: {
@@ -23,9 +23,9 @@ describe('The Tree class', () => {
 
  });
 
- test("finds a dir in the tree", async () => {
+ test("finds a node in the tree", async () => {
 
-  const result = await tree.findDir("a/b");
+  const result = await tree.findNode("a/b");
 
   const expected = { c: { d: {} }, e: { f: {} } };
 
@@ -49,9 +49,9 @@ describe('The Tree class', () => {
 
  });
 
- test("returns the info of a node in the tree", async () => {
+ test("returns the information of a node in the tree", async () => {
 
-  const received = await tree.getDirInfo("a/b");
+  const received = await tree.getNodeInfo("a/b");
 
   const expected = {
    parent: {
@@ -69,9 +69,9 @@ describe('The Tree class', () => {
 
  });
 
- test("adds a directory to the in-memory tree", async () => {
+ test("adds a node to the tree", async () => {
 
-  await tree.addDir("a/g");
+  await tree.addNode("a/g");
   const received = tree.storage;
 
   const expected = {
@@ -85,9 +85,9 @@ describe('The Tree class', () => {
 
  });
 
- test("copy a directory to a different position in the in-memory tree", async () => {
+ test("copy a node to a different position in the tree", async () => {
 
-  await tree.copyDirToPosition("a/b/c", "a/b/e/f");
+  await tree.copyNodeToPosition("a/b/c", "a/b/e/f");
   const received = tree.storage;
 
   const expected = {
@@ -111,9 +111,9 @@ describe('The Tree class', () => {
 
  });
 
- test("delete a directory from position in the in-memory tree", async () => {
+ test("delete a node from position in the tree", async () => {
 
-  await tree.delDirFromPosition("c", "a/b");
+  await tree.delNodeFromPosition("c", "a/b");
   const received = tree.storage;
 
   const expected = {
@@ -130,13 +130,13 @@ describe('The Tree class', () => {
 
  });
 
- test("move a directory to a different position in the in-memory tree", async () => {
+ test("move a node to a different position in the tree", async () => {
 
-  tree = new Tree(new MemoryStorage({}));
+  tree = new TreeService(new MemoryService({}));
 
-  await tree.addDir("a/aa");
-  await tree.addDir("b/bb");
-  await tree.moveDirToPosition("a", "b/bb");
+  await tree.addNode("a/aa");
+  await tree.addNode("b/bb");
+  await tree.moveNodeToPosition("a", "b/bb");
 
   const received = tree.storage;
 

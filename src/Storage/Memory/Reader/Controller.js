@@ -1,4 +1,4 @@
-export default class MemoryReader {
+export default class MemoryReaderController {
 
  IStorage;
  constructor(IStorage) {

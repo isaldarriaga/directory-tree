@@ -1,4 +1,4 @@
-export default class MemoryWriter {
+export default class MemoryWriterController {
 
  IStorage;
 
