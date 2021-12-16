@@ -151,6 +151,14 @@ Finally they delegates the actions to the ``TreeService`` instance.
 
 By the other hand ``DirectoryController`` behaves as the endpoint to the backend subsystem. It's responsible to receive, log, trace (time-lapses), and dispatch commands to ``DirectoryService``.
 
+### The ``CommandString``and ``CommandFile``classes
+
+They parse the user input by extracting commands and arguments from its string representation and converts it to an object.
+
+They ``CommandString`` perform some validations in the input regarding correctness.
+
+``CommandFile`` extends from ``CommandString`` so it can receive a filename and extract its information.
+
 ## Installation:
 
 ### Prerequisites
