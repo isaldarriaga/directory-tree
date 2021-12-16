@@ -21,7 +21,6 @@ describe('The DirectoryService object', () => {
 
  });
 
-
  test("creates a directory in the tree's second level", async () => {
 
   await directoryService.create("a");

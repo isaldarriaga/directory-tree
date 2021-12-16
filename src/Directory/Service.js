@@ -1,5 +1,6 @@
 import TreeService from "../Tree/Service.js"
 import MemoryService from "../Storage/Memory/Service.js"
+import LoggingService from "../Logging/Service.js";
 
 export default class DirectoryService {
 
@@ -27,7 +28,14 @@ export default class DirectoryService {
     infoCreation = await this.treeService.addNodeToPosition(dir, pos);
    }
    if (!infoCreation.me.exists) {
-    throw new Error("Couldn't " + cmd.toLowerCase() + ' ' + dir + '. Info available: ' + JSON.stringify(infoDeletion));
+    const msg = "Couldn't " + cmd.toLowerCase() + ' ' + dir + '. Info available: ' + JSON.stringify(infoDeletion);
+    LoggingService.fatal({
+     class: this.constructor.name,
+     function: this.getCommands.name,
+     msg: msg,
+     infoDeletion: infoDeletion
+    });
+    throw new Error(msg);
    }
    output = cmd + ' ' + infoCreation.me.path;
   } else {
@@ -46,7 +54,14 @@ export default class DirectoryService {
   if (info.parent.exists) {
    const infoDeletion = await this.treeService.delNode(dir);
    if (infoDeletion.me.exists) {
-    throw new Error("Couldn't " + cmd.toLowerCase() + ' ' + dir + '. Info available: ' + JSON.stringify(infoDeletion));
+    const msg = "Couldn't " + cmd.toLowerCase() + ' ' + dir + '. Info available: ' + JSON.stringify(infoDeletion);
+    LoggingService.fatal({
+     class: this.constructor.name,
+     function: this.getCommands.name,
+     msg: msg,
+     infoDeletion: infoDeletion
+    });
+    throw new Error(msg);
    }
    output = cmd + ' ' + infoDeletion.me.path;
   } else {
@@ -77,7 +92,14 @@ export default class DirectoryService {
   if (infoDir.me.exists && infoPos.me.exists) {
    const infoMovement = await this.treeService.moveNodeToPosition(dir, pos);
    if (infoMovement.source.exists || !infoMovement.destination.exists) {
-    throw new Error("Couldn't " + cmd.toLowerCase() + ' ' + dir + ' to ' + pos + '. Info available: ' + JSON.stringify(infoMovement));
+    const msg = "Couldn't " + cmd.toLowerCase() + ' ' + dir + ' to ' + pos + '. Info available: ' + JSON.stringify(infoMovement);
+    LoggingService.fatal({
+     class: this.constructor.name,
+     function: this.getCommands.name,
+     msg: msg,
+     infoDeletion: infoDeletion
+    });
+    throw new Error(msg);
    }
    output = cmd + ' ' + infoMovement.source.path + ' ' + pos;
   } else {

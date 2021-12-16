@@ -1,9 +1,8 @@
+import 'dotenv/config';
 import pino from 'pino';
 
 export default class LoggingService {
 
- // this instruction load .env file into process.env
- static config = require('dotenv').config();
  static logger = pino({ level: process.env.DEBUG_LEVEL ? process.env.DEBUG_LEVEL : "info" });
 
  static fatal(data) {

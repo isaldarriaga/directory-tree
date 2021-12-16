@@ -18,11 +18,17 @@ export default class TreeWriterService extends TreeReaderService {
  async copyNodeToPosition(node, pos) {
 
   const destinationInfo = await this.getNodeInfo(pos);
+  let valueToCopy, destinationNode;
 
-  let [valueToCopy, destinationNode] = await Promise.all([
-   await this.findNode(node),
-   await this.findNode(destinationInfo.parent.path)
-  ]);
+  if (destinationInfo.parent.path === '') {
+   valueToCopy = await this.findNode(node);
+   destinationNode = this.IStorage.storage;
+  } else {
+   [valueToCopy, destinationNode] = await Promise.all([
+    await this.findNode(node),
+    await this.findNode(destinationInfo.parent.path === '' ? pos : destinationInfo.parent.path)
+   ]);
+  }
 
   const sourceDirName = node.substring(node.lastIndexOf('/') + 1);
   const destinationDirName = pos.substring(pos.lastIndexOf('/') + 1);

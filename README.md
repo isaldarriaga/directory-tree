@@ -1,5 +1,19 @@
 # Directory-tree
 
+## Tl;dr
+
+This is a NodeJS program. 
+
+To execute it:
+```
+> node directories.js
+```
+
+To run the tests:
+```
+> npm test
+```
+
 ## The problem
  
 A common method of organizing files on a computer is to store them in hierarchical directories. For instance:
@@ -75,12 +89,11 @@ foods
     squash
 ```
  
-## About the solution
+## The solution
 
 The program is object oriented based on ES6. Each class encapsulates its underlying logic:
 
 - Classes available in ``./src``
-- Testing available in ``./__tests__``
 
 ### The ``TreeService`` class
 
@@ -99,14 +112,14 @@ treeService = new TreeService(new DiskService(myFileStream));
 
 In this case both ``MemoryService`` and ``DiskService`` extends the ``IStorage`` class, and can be safely plugged-into the ``TreeService`` instance at runtime. 
 
-Notice the storage for ``MemoryService`` is a Javascript object, and the storage for ``DiskService`` a file stream (Disk not implemented in this program).
+Notice the storage for ``MemoryService`` is a Javascript object, and the storage for ``DiskService`` is a file stream (DiskService is not implemented in this version).
 
 Each ``TreeService`` instances is composed of 2 additional classes:
 
 - ``TreeReaderService``
 - ``TreeWriterService``
 
-Objects of these types are lazy loaded in the methods of ``TreeService`` depending on the operations to perform on the tree. Once instantiated they perform the action to manipulate the storage. These objects are destroyed and eventually garbage collected by V8. In a real application they could be closured into the execution context of these methods to increase performance by keeping their instances alive.
+Objects of these types are lazy loaded in the methods of ``TreeService`` depending on the operations to perform on the tree. Once instantiated they perform the action to manipulate the storage. These objects are destroyed and eventually garbage collected by V8. In a real application they could be closured into the execution context of these methods to increase performance by keeping the instances alive.
 
 ### The ``MemoryService`` class
 
@@ -114,12 +127,12 @@ Implements an in-memory storage using a plain Javascript object.
 
 Design: Dependency Inversion, Composition, Lazy loading, Utility library, SRP.
 
-This class extends from ``IStorage`` class and overwrites its methods:
+This class extends from ``IStorage`` and overwrites its methods:
 - find
 - add
 - del
 
-when the execution context of these methods is started 2 specialized classes are instantiated:
+2 specialized classes are instantiated when the execution context of these methods is started:
 
 - MemoryReaderService
 - MemoryWriterService
@@ -128,17 +141,16 @@ Both ``MemoryReaderService`` and ``MemoryWriterService`` specializes in in-memor
 
 Finally, an utility library instance is available for these 2 classes thanks to the reference to ``IStorage`` that they receive.
 
-Usage: this.IStorage.utils (MemoryUtils, DiskUtils, etc.)
+Usage: 
 
-The ``MemoryService`` provides the instance to ``MemoryUtils`` in its constructor with the implementation details associated to in-memory management. 
-
-Another Storage Service like ``DiskService`` should provide ``DiskUtils`` in order to keep this pattern.
+By calling ``this.IStorage.utils`` from these 2 classes you'll get either a ``MemoryUtils`` or a ``DiskUtils``  depending on the context.
 
 ### The ``DirectoryService`` and ``DirectoryController`` classes
 
-Similar to other Services (``TreeService``, ``MemoryService``), the ``DirectoryService`` implements backend logic for a directory tree in this case.
 
-Design: Commander, MVC (kind of)
+Similar to other Services (``TreeService``, ``MemoryService``), the ``DirectoryService`` implements backend logic: a directory tree in this case.
+
+Design: Command pattern
 
 The methods in ``DirectoryService`` matches commands received via UI:
 - create
@@ -151,13 +163,13 @@ Finally they delegates the actions to the ``TreeService`` instance.
 
 By the other hand ``DirectoryController`` behaves as the endpoint to the backend subsystem. It's responsible to receive, log, trace (time-lapses), and dispatch commands to ``DirectoryService``.
 
-### The ``CommandString``and ``CommandFile``classes
+### The ``CommandString`` and ``CommandFile`` classes
 
-They parse the user input by extracting commands and arguments from its string representation and converts it to an object.
+They parse the user input by extracting commands and arguments and converts them to an object.
 
-They ``CommandString`` perform some validations in the input regarding correctness.
+The ``CommandString`` perform some validations in the input regarding correctness.
 
-``CommandFile`` extends from ``CommandString`` so it can receive a filename and extract its information.
+Finally ``CommandFile`` extends from ``CommandString``. It receives a filename and extract its information. This one is useful to let the user pass a --file-name argument to the program.
 
 ## Installation:
 
@@ -203,15 +215,16 @@ ERR_USER_INPUT_HAS_INVALID_COMMAND="input file has an invalid command"
 ERR_COMMAND_WITH_INVALID_NUM_ARGS="input file has a command with invalid number of arguments"
 
 # ==== test files
-# COMMAND_VALID_01 --> this file with commands is loaded by default
-# overwriting the -f or --file-name cli argument
-COMMAND_VALID_01=./app/test-files/valid/01.txt
+# this file is loaded by default
+COMMAND_VALID_01=./__tests__/Command/files/valid/01.txt
+# files with invalid input
+COMMAND_INVALID_01=./__tests__/Command/files/invalid/01.txt
+COMMAND_INVALID_02=./__tests__/Command/files/invalid/02.txt
+
 
 ```
 
-3. Change default arguments
-
-## Run the program (Not implemented yet => run "npm test")
+## Run the program
 
 ```
 > node directories.js 
@@ -240,7 +253,7 @@ DEBUG_LEVEL=trace
 
 ## The UI
 
-1. If you want to change the default parameters of the program from cli run:
+1. Display help from CLI (Command Line Interface):
 ```
 node directories.js --help
 ```
@@ -250,42 +263,28 @@ Usage: directories [options]
 
 Options:
   -V, --version            output the version number
-  -f, --input-file <path>  path to the file with commands. Overwrites the COMMAND_VALID_01 environment variable. (default: "./app/test-files/valid/01.txt")
+  -f, --input-file <path>  path to the file with commands. Overwrites the COMMAND_VALID_01 environment variable. (default:
+                           "./__tests__/Command/files/valid/01.txt")
+  -s, --setupFiles <jest>  allow jest to dotenv/config. You dont need to pass this argument
   -h, --help               display help for command
 
 ```
-3. Execute the program with a different valid file:
+3. Execute the program with a different file:
 
-First copy your file into the test-files folder, like
-```
-> cp <my-file> ./app/test-files/valid/<num>.txt
-```
-Then run the program again:
 
 ```
-> node directories.js -f ./app/test-files/valid/<num>.txt
-```
-For example:
-
-```
-> node directories.js -f ./app/test-files/valid/02.txt
+> node directories.js -f /path/to/file
 ```
 
-Note: use --file-name instead of -f, this way:
+or
 
 ```
-> node directories.js --file-name ./app/test-files/valid/02.txt
+> node directories.js --file-name /path/to/file
 ```
-
-NOTE: 
-
-- Files with valid commands are expected to be saved into the ``./app/test-files/valid`` folder, and their respective expected output into ``./app/test-files-operator/expected/valid``
-
-- Files with INVALID commands are expected to be saved into the ``./app/test-files/invalid`` folder, and their respective expected output into ``./app/test-files-operator/expected/invalid``
-
-- Files for individual modules are expected to be saved into the ``./app/<module>/test-files/`` folder
 
 # Testing
+
+- Test code available in ``./__tests__`` folder
 
 1. Install the ```jest``` testing framework 
 ```
@@ -298,74 +297,100 @@ NOTE:
 > npm test
 ```
 
-3. Execute integration and unit tests selectively
+3. Execute a tests selectively
 ```
-> clear && jest __tests__/Storage && jest __tests__/Tree && jest __tests__/Directory
-```
-
-Note: You can run test individually for the desired module (folder), or the integration test only by editing the command above.
-
-3. Expect an output like the following (including code coverage):
-
+> clear && jest __tests__/Storage
 ```
 
- ❯ npm test                                                  
+Note: Just enter the name of a subfolder in ``./__tests__``
+
+## Example of all tests running:
+
+```
+
+ ❯ npm test                                                                                                                                                 ─╯
 
 > directory-tree@1.0.0 test /home/ivan/code/demo/nodejs/directory-tree
-> jest
+> jest --setupFiles dotenv/config
 
- PASS  __tests__/Tree/Writer/Service.js
-  The TreeWriterService object
-    ✓ adds a node to the tree (7 ms)
+ PASS  __tests__/Tree/Reader/Service.test.js
+  The TreeReaderService object
+    ✓ finds a node in the tree (6 ms)
+    ✓ formats a tree into an string representation (12 ms)
+    ✓ returns the info of a node in the tree (2 ms)
+
+ PASS  __tests__/Tree/Service.test.js
+  The TreeService object
+    ✓ finds a node in the tree (6 ms)
+    ✓ formats a tree into its string representation (11 ms)
+    ✓ returns the information of a node in the tree (2 ms)
+    ✓ adds a node to the tree (1 ms)
     ✓ copy a node to a different position in the tree (2 ms)
     ✓ delete a node from position in the tree (1 ms)
-    ✓ move a node to a different position in the tree (2 ms)
+    ✓ move a node to a different position in the tree (3 ms)
+    ✓ is polymorphic (1 ms)
+
+ PASS  __tests__/UI/CLI.test.js
+  The CLI object
+    ✓ accepts an input file that exist (9 ms)
+    ✓ reject a file that doesn't exist (1 ms)
 
  PASS  __tests__/Storage/Memory/Utils.test.js
   The MemoryUtils object
-    ✓ tells if an object is empty (3 ms)
+    ✓ tells if an object is empty (4 ms)
     ✓ can safely get the value of an object (array or object) (1 ms)
     ✓ can get the value of a property by its name (1 ms)
 
  PASS  __tests__/Storage/Memory/Writer/Service.test.js
   The MemoryWriterService object
-    ✓ add a node to the in-memory tree and assigns a value (4 ms)
+    ✓ add a node to the in-memory tree and assigns a value (6 ms)
+
+ PASS  __tests__/Command/File.test.js
+  The CommandFile object
+    ✓ returns the array of commands from a command file (7 ms)
+    ✓ reject file with invalid command (2 ms)
+    ✓ reject file with wrong number of arguments for command (1 ms)
+
+ PASS  __tests__/Directory/Service.test.js
+  The DirectoryService object
+    ✓ creates a directory in the root's directory tree (9 ms)
+    ✓ creates a directory in the tree's second level (2 ms)
+    ✓ formats a tree into its string representation (14 ms)
+    ✓ delete a node from a position in the tree (5 ms)
+    ✓ move a node to a different position in the tree (7 ms)
+
+ PASS  __tests__/Command/String.test.js
+  The CommandString object
+    ✓ returns the array of commands from a command string sequence (5 ms)
 
  PASS  __tests__/Storage/Memory/Reader/Service.test.js
   The MemoryReaderService object
     ✓ find and return a node in the in-memory tree using a path (5 ms)
 
- PASS  __tests__/Tree/Reader/Service.test.js
-  The TreeReaderService object
-    ✓ finds a node in the tree (5 ms)
-    ✓ formats a tree into an string representation (12 ms)
-    ✓ returns the info of a node in the tree (2 ms)
-
- PASS  __tests__/Directory/Service.test.js
-  The DirectoryService object
-    ✓ creates a directory in the root's directory tree (5 ms)
-    ✓ creates a directory in the tree's second level (2 ms)
-    ✓ formats a tree into its string representation (12 ms)
-    ✓ delete a node from a position in the tree (3 ms)
-    ✓ move a node to a different position in the tree (6 ms)
-
- PASS  __tests__/Tree/Service.test.js
-  The TreeService object
-    ✓ finds a node in the tree (5 ms)
-    ✓ formats a tree into its string representation (10 ms)
-    ✓ returns the information of a node in the tree (1 ms)
-    ✓ adds a node to the tree (2 ms)
+ PASS  __tests__/Tree/Writer/Service.js
+  The TreeWriterService object
+    ✓ adds a node to the tree (7 ms)
     ✓ copy a node to a different position in the tree (1 ms)
     ✓ delete a node from position in the tree (1 ms)
-    ✓ move a node to a different position in the tree (2 ms)
-    ✓ is polymorphic (1 ms)
+    ✓ move a node to a different position in the tree (1 ms)
+
+ PASS  __tests__/UI/App.test.js
+  The App object
+    ✓ runs all application components and return results (25 ms)
+    ✓ finishes in less than 2 seconds (9 ms)
 
 -----------------------|---------|----------|---------|---------|-------------------------
 File                   | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s       
 -----------------------|---------|----------|---------|---------|-------------------------
-All files              |   79.68 |    80.86 |   80.95 |   79.68 |                         
- Directory             |   48.35 |    68.51 |     100 |   48.35 |                         
-  Service.js           |   48.35 |    68.51 |     100 |   48.35 | 18-34,42-53,67-84       
+All files              |   89.67 |     85.1 |   83.33 |   89.67 |                         
+ Command               |   89.41 |    83.33 |     100 |   89.41 |                         
+  File.js              |     100 |      100 |     100 |     100 |                         
+  String.js            |   88.15 |    82.35 |     100 |   88.15 | 33-35,51-53,60-62       
+ Directory             |   71.17 |    82.19 |     100 |   71.17 |                         
+  Controller.js        |     100 |     87.5 |     100 |     100 | 10                      
+  Service.js           |   56.63 |     80.7 |     100 |   56.63 | 19-42,82-106            
+ Logging               |   81.25 |       75 |      50 |   81.25 |                         
+  Service.js           |   81.25 |       75 |      50 |   81.25 | 9-10,17-18,21-22        
  Storage               |   66.66 |      100 |      20 |   66.66 |                         
   IStorage.js          |   66.66 |      100 |      20 |   66.66 | 12-14,17-18,21-22,25-26 
  Storage/Disk          |   83.78 |      100 |   14.28 |   83.78 |                         
@@ -376,20 +401,24 @@ All files              |   79.68 |    80.86 |   80.95 |   79.68 |
   Utils.js             |   96.77 |       90 |     100 |   96.77 | 22                      
  Storage/Memory/Reader |   89.28 |    93.75 |      75 |   89.28 |                         
   Service.js           |   89.28 |    93.75 |      75 |   89.28 | 9-11                    
- Storage/Memory/Writer |   93.93 |    76.47 |     100 |   93.93 |                         
-  Service.js           |   93.93 |    76.47 |     100 |   93.93 | 18-19,44-45             
- Tree                  |     100 |       84 |   85.71 |     100 |                         
-  Service.js           |     100 |       84 |   85.71 |     100 | 19-71                   
- Tree/Reader           |   59.82 |    84.05 |    90.9 |   59.82 |                         
-  Service.js           |   59.82 |    84.05 |    90.9 |   59.82 | 31-75                   
- Tree/Writer           |     100 |       80 |   91.66 |     100 |                         
-  Service.js           |     100 |       80 |   91.66 |     100 | 13-42                   
+ Storage/Memory/Writer |   93.93 |    77.77 |     100 |   93.93 |                         
+  Service.js           |   93.93 |    77.77 |     100 |   93.93 | 18-19,44-45             
+ Tree                  |     100 |    83.92 |    90.9 |     100 |                         
+  Service.js           |     100 |    83.92 |    90.9 |     100 | 19-71                   
+ Tree/Reader           |     100 |    87.14 |    90.9 |     100 |                         
+  Service.js           |     100 |    87.14 |    90.9 |     100 | 14-30,91                
+ Tree/Writer           |     100 |    86.79 |     100 |     100 |                         
+  Service.js           |     100 |    86.79 |     100 |     100 | 9-48                    
+ UI                    |     100 |       90 |     100 |     100 |                         
+  App.js               |     100 |    85.71 |     100 |     100 | 9                       
+  CLI.js               |     100 |      100 |     100 |     100 |                         
 -----------------------|---------|----------|---------|---------|-------------------------
-Test Suites: 7 passed, 7 total
-Tests:       25 passed, 25 total
+Test Suites: 11 passed, 11 total
+Tests:       33 passed, 33 total
 Snapshots:   0 total
-Time:        1.557 s, estimated 2 s
+Time:        2.147 s
 Ran all test suites.
+
 
 
 ```

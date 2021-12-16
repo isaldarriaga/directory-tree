@@ -1,13 +1,7 @@
 import fs from 'fs';
-import CLInterface from '../../src/UI/CLInterface.js';
+import CLI from '../../src/UI/CLI.js';
 
-describe('The CLInterface class', () => {
-
- let clInterface;
-
- beforeEach(() => {
-  clInterface = new CLInterface();
- });
+describe('The CLI object', () => {
 
  test("accepts an input file that exist", async () => {
 
@@ -20,7 +14,7 @@ describe('The CLInterface class', () => {
 
   process.argv.push('--input-file', validFileCopy);
 
-  const args = clInterface.getArguments();
+  const args = CLI.getArguments();
 
   if (fs.existsSync(validFileCopy)) {
    fs.unlinkSync(validFileCopy, '');
@@ -39,7 +33,7 @@ describe('The CLInterface class', () => {
   expect.assertions(1);
 
   try {
-   clInterface.getArguments();
+   CLI.getArguments();
   } catch (e) {
    expect(e.msg).toBe(process.env.ERR_INPUT_FILE_DOES_NOT_EXIST);
   }

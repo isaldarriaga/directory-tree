@@ -6,8 +6,8 @@ export default class CommandString {
   this.userInput = userInput
  }
 
- async getCommands() {
-  return await this.userInput
+ getCommands() {
+  return this.userInput
    .split('\n')
    .filter((line) => line.length > 0)
    .map((line) => line.split(' '))

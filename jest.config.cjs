@@ -157,7 +157,8 @@ module.exports = {
   // "/Command/",
   // "/Directory/",
   // "/Storage/",
-  // "/Tree/"
+  // "/Tree/",
+  // "/UI/"
  ],
 
  // The regexp pattern or array of patterns that Jest uses to detect test files
