@@ -194,6 +194,11 @@ ERR_INPUT_FILE_DOES_NOT_EXIST="input file does not exist"
 ERR_INPUT_FILE_HAS_INVALID_COMMAND="input file has an invalid command"
 ERR_COMMAND_WITH_INVALID_NUM_ARGS="input file has a command with invalid number of arguments"
 
+# ==== test files
+# APP_VALID_01 --> this file with commands is loaded by default
+# overwriting the -f or --file-name cli argument
+APP_VALID_01=./app/test-files/valid/01.txt
+
 ```
 
 3. Change default arguments
