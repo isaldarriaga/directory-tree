@@ -191,13 +191,13 @@ DEBUG_LEVEL=fatal
 
 # ==== error messages
 ERR_INPUT_FILE_DOES_NOT_EXIST="input file does not exist"
-ERR_INPUT_FILE_HAS_INVALID_COMMAND="input file has an invalid command"
+ERR_USER_INPUT_HAS_INVALID_COMMAND="input file has an invalid command"
 ERR_COMMAND_WITH_INVALID_NUM_ARGS="input file has a command with invalid number of arguments"
 
 # ==== test files
-# APP_VALID_01 --> this file with commands is loaded by default
+# COMMAND_VALID_01 --> this file with commands is loaded by default
 # overwriting the -f or --file-name cli argument
-APP_VALID_01=./app/test-files/valid/01.txt
+COMMAND_VALID_01=./app/test-files/valid/01.txt
 
 ```
 
@@ -242,7 +242,7 @@ Usage: directories [options]
 
 Options:
   -V, --version            output the version number
-  -f, --input-file <path>  path to the file with commands. Overwrites the APP_VALID_01 environment variable. (default: "./app/test-files/valid/01.txt")
+  -f, --input-file <path>  path to the file with commands. Overwrites the COMMAND_VALID_01 environment variable. (default: "./app/test-files/valid/01.txt")
   -h, --help               display help for command
 
 ```
