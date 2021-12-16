@@ -27,8 +27,10 @@ export default class Directories {
    }
   };
 
-  console.log(received);
-  console.log(expected);
+  // console.log(received);
+  // console.log(expected);
+
+  throw new Error('Not implemented yet => run "npm test"');
 
  }
 }

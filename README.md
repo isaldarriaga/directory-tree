@@ -99,7 +99,7 @@ treeService = new TreeService(new DiskService(myFileStream));
 
 In this case both ``MemoryService`` and ``DiskService`` extends the ``IStorage`` class, and can be safely plugged-into the ``TreeService`` instance at runtime. 
 
-Notice the storage for ``MemoryService`` is a Javascript object, and the storage for ``DiskService`` a file stream (not implemented in this program).
+Notice the storage for ``MemoryService`` is a Javascript object, and the storage for ``DiskService`` a file stream (Disk not implemented in this program).
 
 Each ``TreeService`` instances is composed of 2 additional classes:
 
@@ -198,9 +198,10 @@ ERR_COMMAND_WITH_INVALID_NUM_ARGS="input file has a command with invalid number 
 
 3. Change default arguments
 
-## Run the program
+## Run the program (Not implemented yet => run "npm test")
+
 ```
-> node directories.js
+> node directories.js 
 ```
 
 ## Change verbosity
