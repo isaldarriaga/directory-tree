@@ -79,8 +79,8 @@ foods
 
 The program is object oriented based on ES6. Each class encapsulates its underlying logic:
 
-- Classes available in ./src
-- Testing available in ./__tests__
+- Classes available in ``./src``
+- Testing available in ``./__tests__``
 
 ### The ``TreeService`` class
 
