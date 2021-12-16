@@ -29,6 +29,6 @@
   "jest-test-performance": "^1.0.1"
  },
  "scripts": {
-  "test": "jest"
+  "test": "jest --setupFiles dotenv/config"
  }
 }
