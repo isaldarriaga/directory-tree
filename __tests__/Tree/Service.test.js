@@ -1,13 +1,14 @@
-import MemoryService from "../../src/Storage/Memory/Service";
-import TreeService from "../../src/Tree/Service";
+import MemoryService from "../../src/Storage/Memory/Service.js";
+import DiskService from "../../src/Storage/Disk/Service.js";
+import TreeService from "../../src/Tree/Service.js";
 
-describe('The TreeService class', () => {
+describe('The TreeService object', () => {
 
- let tree;
+ let treeService;
 
  beforeEach(() => {
 
-  tree = new TreeService(new MemoryService(
+  treeService = new TreeService(new MemoryService(
    {
     a: {
      b: {
@@ -25,7 +26,7 @@ describe('The TreeService class', () => {
 
  test("finds a node in the tree", async () => {
 
-  const result = await tree.findNode("a/b");
+  const result = await treeService.findNode("a/b");
 
   const expected = { c: { d: {} }, e: { f: {} } };
 
@@ -33,9 +34,9 @@ describe('The TreeService class', () => {
 
  });
 
- test("formats a tree into an string representation", async () => {
+ test("formats a tree into its string representation", async () => {
 
-  const received = await tree.toString();
+  const received = await treeService.toString();
 
   const expected = `a
   b
@@ -51,7 +52,7 @@ describe('The TreeService class', () => {
 
  test("returns the information of a node in the tree", async () => {
 
-  const received = await tree.getNodeInfo("a/b");
+  const received = await treeService.getNodeInfo("a/b");
 
   const expected = {
    parent: {
@@ -71,8 +72,8 @@ describe('The TreeService class', () => {
 
  test("adds a node to the tree", async () => {
 
-  await tree.addNode("a/g");
-  const received = tree.storage;
+  await treeService.addNode("a/g");
+  const received = treeService.storage;
 
   const expected = {
    a: {
@@ -87,8 +88,8 @@ describe('The TreeService class', () => {
 
  test("copy a node to a different position in the tree", async () => {
 
-  await tree.copyNodeToPosition("a/b/c", "a/b/e/f");
-  const received = tree.storage;
+  await treeService.copyNodeToPosition("a/b/c", "a/b/e/f");
+  const received = treeService.storage;
 
   const expected = {
    a: {
@@ -113,8 +114,8 @@ describe('The TreeService class', () => {
 
  test("delete a node from position in the tree", async () => {
 
-  await tree.delNodeFromPosition("c", "a/b");
-  const received = tree.storage;
+  await treeService.delNodeFromPosition("c", "a/b");
+  const received = treeService.storage;
 
   const expected = {
    a: {
@@ -132,13 +133,13 @@ describe('The TreeService class', () => {
 
  test("move a node to a different position in the tree", async () => {
 
-  tree = new TreeService(new MemoryService({}));
+  treeService = new TreeService(new MemoryService({}));
 
-  await tree.addNode("a/aa");
-  await tree.addNode("b/bb");
-  await tree.moveNodeToPosition("a", "b/bb");
+  await treeService.addNode("a/aa");
+  await treeService.addNode("b/bb");
+  await treeService.moveNodeToPosition("a", "b/bb");
 
-  const received = tree.storage;
+  const received = treeService.storage;
 
   const expected = {
    b: {
@@ -151,6 +152,22 @@ describe('The TreeService class', () => {
   };
 
   expect(received).toEqual(expected);
+
+ });
+
+ test("is polymorphic", async () => {
+
+  treeService = new TreeService(new MemoryService({}));
+  let abstractStorage = treeService.IStorage;
+  let concreteStorage = treeService.storage;
+  expect(abstractStorage).toBeInstanceOf(MemoryService);
+  expect(concreteStorage).toBeInstanceOf(Object);
+
+  treeService = new TreeService(new DiskService({}));
+  abstractStorage = treeService.IStorage;
+  concreteStorage = treeService.storage;
+  expect(abstractStorage).toBeInstanceOf(DiskService);
+  expect(concreteStorage).toBeInstanceOf(Object);
 
  });
 
