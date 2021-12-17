@@ -171,6 +171,27 @@ The ``CommandString`` perform some validations in the input regarding correctnes
 
 Finally ``CommandFile`` extends from ``CommandString``. It receives a filename and extract its information. This one is useful to let the user pass a --file-name argument to the program.
 
+## Other classes
+
+### LoggingService
+
+A class with static methods to trace, log, err messages to stdout. Each method correspond to the ``DEBUG_LEVEL`` values that can be set in the ``.env`` file (fatal, error, warn, info, debug, trace). 
+
+Note: A value of ``silent`` won't log anything to stdout despite the condition of the program.
+
+### CLI
+
+Parses Command Line Interface arguments
+
+### App
+
+Integrate all modules
+
+
+### Directories
+
+Runs the app
+
 ## Installation:
 
 ### Prerequisites
