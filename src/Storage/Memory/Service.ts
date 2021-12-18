@@ -15,12 +15,12 @@ export default class MemoryService extends IStorage {
  }
 
  async add(item: string, value: any) {
-  const memoryWriter = new MemoryWriterService(this)
+  const memoryWriter: MemoryWriterService = new MemoryWriterService(this)
   return await memoryWriter.add(item, value);
  }
 
  async del(item: string) {
-  const memoryWriter = new MemoryWriterService(this)
+  const memoryWriter: MemoryWriterService = new MemoryWriterService(this)
   return await memoryWriter.del(item);
  }
 }
