@@ -16,7 +16,7 @@ export default class CLI {
     'path to the file with commands. Overwrites the COMMAND_VALID_01 environment variable.',
     process.env.COMMAND_VALID_01)
    .option('-s, --setupFiles <jest>',
-    'allow jest to dotenv/config. You dont need to pass this argument');
+    "allow jest to load dotenv/config file. You don't need to edit this argument.");
 
   program.parse(process.argv);
   const args = program.opts();

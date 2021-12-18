@@ -209,7 +209,7 @@ Runs the application program.
 
 ## Installation:
 
-### Prerequisites
+### Steps
 
 1. Install NodeJS
 
@@ -233,6 +233,7 @@ Run:
 ```
 > npm install -g typescript
 > tsc -v
+> Version 4.5.4
 ```
 
 3. Get the code
@@ -258,40 +259,15 @@ Run:
 ```
 cd $HOME/directory-tree
 npm install
-ls -al
 ```
 
-### Customization
-
-1. Edit ``$HOME/directory-tree/.env``
-
-2. The file should look like this
-
-```
-# ==== debugging
-# limits the output on screen: silent, fatal, error, warn, info, debug, trace
-DEBUG_LEVEL=fatal
-
-# ==== error messages
-ERR_INPUT_FILE_DOES_NOT_EXIST="input file does not exist"
-ERR_USER_INPUT_HAS_INVALID_COMMAND="input file has an invalid command"
-ERR_COMMAND_WITH_INVALID_NUM_ARGS="input file has a command with invalid number of arguments"
-
-# ==== test files
-# this file is loaded by default
-COMMAND_VALID_01=./__tests__/Command/files/valid/01.txt
-# files with invalid input
-COMMAND_INVALID_01=./__tests__/Command/files/invalid/01.txt
-COMMAND_INVALID_02=./__tests__/Command/files/invalid/02.txt
-```
-
-## Recompile the program with Typescript tools
+5. Recompile the code via Typescript tools
 
 Run:
 ```
 > tsc
 ```
-*NOTE: optional if ``./dist`` folder is not available*
+*NOTE: This step is required if ``./dist`` folder doesn't exist*
 
 ## Run the program
 
@@ -334,7 +310,7 @@ Options:
   -V, --version            output the version number
   -f, --input-file <path>  path to the file with commands. Overwrites the COMMAND_VALID_01 environment variable. (default:
                            "./__tests__/Command/files/valid/01.txt")
-  -s, --setupFiles <jest>  allow jest to dotenv/config. You dont need to pass this argument
+  -s, --setupFiles <jest>  allow jest to load dotenv/config file. You don't need to edit this argument
   -h, --help               display help for command
 
 ```
