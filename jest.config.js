@@ -14,7 +14,7 @@ module.exports = {
   // "/Directory/",
   // "/Storage/",
   // "/Tree/",
-  "/UI/"
+  // "/UI/"
  ],
  verbose: true,
  roots: [
