@@ -10,7 +10,7 @@ module.exports = {
  testPathIgnorePatterns: [
   "/node_modules/",
   "/dist/",
-  "/Command/",
+  // "/Command/",
   "/Directory/",
   // "/Storage/",
   // "/Tree/",
