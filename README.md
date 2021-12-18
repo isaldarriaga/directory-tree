@@ -93,11 +93,13 @@ foods
 
 The program is object oriented. Written in TypeScript that transpile to ES6.
 
-*Note: Classes available in ``./src``*
+*Classes available in ``./src``*
 
 ### The ``TreeService`` class
 
 Encapsulates the underlying storage where the "tree" will reside.
+
+![TreeService](/uml/Tree/Service.png)
 
 Design: Dependency Inversion, Composition, Lazy loading, SRP.
 
@@ -113,11 +115,11 @@ treeService = new TreeService(new DiskService(disk));
 
 Both ``MemoryService`` and ``DiskService`` extends the ``IStorage`` class, and can be safely plugged-into the ``TreeService`` instance. 
 
-*Note: More implementation details at: ``./__test__/Tree/Service.test.ts`` and ``./src/Tree/``*
+*More implementation details at: ``./__test__/Tree/Service.test.ts`` and ``./src/Tree/``*
 
 Notice the storage for ``MemoryService`` is a plain Javascript object, and the storage for ``DiskService`` is an typed object named ``Disk``.
 
-*Note: DiskService is not implemented in this version*
+*DiskService is not implemented in this version*
 
 Each ``TreeService`` instances is composed of 2 additional classes:
 
@@ -129,6 +131,8 @@ Objects of these types are lazy loaded in the methods of ``TreeService``. They p
 ### The ``MemoryService`` class
 
 Implements an in-memory tree using a plain Javascript object.
+
+![MemoryService](/uml/Storage/Memory/Service.png)
 
 Design: Dependency Inversion, Composition, Lazy loading, Utility library, SRP.
 
@@ -154,6 +158,8 @@ You'll get either a ``MemoryUtils`` or a ``DiskUtils`` by calling ``this.IStorag
 
 The ``DirectoryService`` implements backend logic: a directory tree. 
 
+![DirectoryService](/uml/Directory/Service.png)
+
 Design: Command, Proxy
 
 The methods in ``DirectoryService`` matches commands received via UI:
@@ -168,6 +174,8 @@ Finally they delegates the actions to the ``TreeService`` instance.
 By the other hand ``DirectoryController`` behaves as the endpoint to the backend subsystem. It's responsible to receive, log, trace (time-lapses), and dispatch commands to ``DirectoryService``. It uses the ``LoggingService`` utility class.
 
 ### The ``CommandString`` and ``CommandFile`` classes
+
+![CommandFile](/uml/Command/File.png)
 
 They parse the user input by extracting commands and arguments, and converts them to an object.
 
@@ -185,7 +193,7 @@ A class with static methods to trace, log, err, etc. messages to stdout via the 
 
 Each method correspond to the ``DEBUG_LEVEL`` values that can be set in the ``.env`` file (fatal, error, warn, info, debug, trace). 
 
-*Note: A value of ``silent`` won't log anything to stdout despite the condition of the program.*
+*A value of ``silent`` won't log anything to stdout despite the condition of the program.*
 
 ### The CLI class
 
@@ -231,7 +239,7 @@ Run:
 
 Via Web browser:
 
-- Navigate to https://github.com/isaldarriaga/directory-tree/commits/main
+- Navigate to https://github.com/isaldarriaga/directory-tree
 - Download the Zip file
 - Extract the Zip to ``$HOME/directory-tree``
 
@@ -275,8 +283,6 @@ COMMAND_VALID_01=./__tests__/Command/files/valid/01.txt
 # files with invalid input
 COMMAND_INVALID_01=./__tests__/Command/files/invalid/01.txt
 COMMAND_INVALID_02=./__tests__/Command/files/invalid/02.txt
-
-
 ```
 
 ## Recompile the program with Typescript tools
