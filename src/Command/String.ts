@@ -1,4 +1,5 @@
 import LoggingService from "../Logging/Service";
+import { Command } from "./Types";
 
 export default class CommandString {
  userInput: string
@@ -6,7 +7,7 @@ export default class CommandString {
   this.userInput = userInput
  }
 
- getCommands() {
+ getCommands(): Array<Command> {
   return this.userInput
    .split('\n')
    .filter((line) => line.length > 0)

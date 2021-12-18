@@ -1,4 +1,3 @@
-import { Folder } from './../../src/Storage/Disk/Types';
 import MemoryService from "../../src/Storage/Memory/Service";
 import DiskService from "../../src/Storage/Disk/Service";
 import TreeService from "../../src/Tree/Service";

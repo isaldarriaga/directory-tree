@@ -13,15 +13,15 @@ export default abstract class IStorage {
   return JSON.parse(JSON.stringify(this.storage));
  }
 
- find(item: any): Promise<any> {
+ find(item: any): Promise<any | void> {
   throw new Error('Must implement');
  }
 
- add(item: any, value: any) {
+ add(item: any, value: any): Promise<boolean | void> {
   throw new Error('Must implement');
  }
 
- del(item: any) {
+ del(item: any): Promise<boolean | void> {
   throw new Error('Must implement');
  }
 }

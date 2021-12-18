@@ -11,7 +11,7 @@ module.exports = {
   "/node_modules/",
   "/dist/",
   // "/Command/",
-  "/Directory/",
+  // "/Directory/",
   // "/Storage/",
   // "/Tree/",
   "/UI/"
