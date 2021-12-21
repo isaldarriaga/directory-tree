@@ -169,7 +169,7 @@ The methods in ``DirectoryService`` matches commands received via UI:
 - move
 
 They validate correctness of commands received and the initial state of the tree.
-Finally they delegates the actions to the ``TreeService`` instance. 
+Finally they delegate the actions to the ``TreeService`` instance. 
 
 By the other hand ``DirectoryController`` behaves as the endpoint to the backend subsystem. It's responsible to receive, log, trace (time-lapses), and dispatch commands to ``DirectoryService``. It uses the ``LoggingService`` utility class.
 
@@ -216,6 +216,7 @@ Runs the application program.
 Run:
 ```
 > sudo dnf install nvm
+> nvm install v14.18.2
 > nvm use v14.18.2
 ```
 
