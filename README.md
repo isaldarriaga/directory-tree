@@ -215,7 +215,19 @@ Runs the application program.
 
 Run:
 ```
-> sudo dnf install nvm
+> curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
+> source ~/.bashrc
+```
+
+Or
+
+```
+> curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | zsh
+> source ~/.zshrc
+```
+*if using zsh*
+
+```
 > nvm install v14.18.2
 > nvm use v14.18.2
 ```
@@ -236,6 +248,8 @@ Run:
 > tsc -v
 > Version 4.5.4
 ```
+
+*This step is optional if re-compilation is required with Typescript*
 
 3. Get the code
 
@@ -280,6 +294,12 @@ Run:
 If you want see debugging output in the console
 
 1. Install the program pino-pretty globally to format the output
+
+``
+npm install -g pino-pretty
+``
+
+
 2. Edit .env file and change debug level:
 DEBUG_LEVEL=debug
 
